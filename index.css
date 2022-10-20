@@ -1,0 +1,27 @@
+p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  p.num {
+    font-size: 3rem;
+    width: 100px;
+    text-align: right;
+  }
+  
+  p.operator {
+    font-size: 3rem;
+    width: 100px;
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  p.line { 
+    font-size: 3rem;
+    min-width: 140px;
+    float: left;
+    border-bottom: 4px solid gray;
+    margin-top: -15px;
+  }
+
+  [class="problem-selection"] {
+    display: block;
+  }
