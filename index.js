@@ -64,7 +64,7 @@ function generateProblem(type, qty){
         correct: false,
         student: "Ann"
     }
-    return problem
+    displayProblem(problem)
 }
 
 function solveProblem(type, problemNumbers){
@@ -80,10 +80,37 @@ function submitAnswer(event){
     
 }
 
+function displayProblem(problem){
+    let problemDiv = document.getElementById('problem')
+    // create equationDiv
+    let equationDiv = document.createElement('div')
+    // loop over problemNumbers
+    problem.numbers.forEach((problemNumber, index) => {
+        let problemNumberDiv = document.createElement('div')
+        problemNumberDiv.innerHTML = problemNumber
+        equationDiv.appendChild(problemNumberDiv)
+        if(index !== problem.numbers.length -1){
+            let operatorDiv = document.createElement('div')
+            operatorDiv.innerHTML = problem.type
+            equationDiv.appendChild(operatorDiv)
+        }
+    })
+    let solutionLineDiv = document.createElement('div')
+    solutionLineDiv.innerHTML = "____________"
+    equationDiv.appendChild(solutionLineDiv)
+    problemDiv.appendChild(equationDiv)
+}
+
+// create div, with innerHTML of problem number
+// append div to equationDiv
+// unless at end, add an operatorDiv
+// append equationDiv to problemDiv
+
+
 // EVENT LISTENERS
 // document.getElementById('two-numbers-add').addEventListener("click", displayAdditionProblem)
 // document.getElementById('three-numbers-add').addEventListener("click", displayAdditionProblem)
 // document.getElementById('two-numbers-sub').addEventListener("click", displaySubtractionProblem)
 
 
-console.log(generateProblem("-", 2))
+generateProblem("+",3)
