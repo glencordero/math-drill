@@ -4,7 +4,7 @@
 // keeps track of problems missed
 
 // SETUP
-let numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+let allNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 
 
 // FUNCTIONS
@@ -13,72 +13,77 @@ function getRandomNumbers(numbers, qty){
     return shuffled.slice(0,qty)
 }
 
-
-
-function displayAdditionProblem(event){
-    let qty = event.target.dataset.quantity
-    let generatedNumbers = getRandomNumbers(numbers,qty)
-    let problemDiv = document.createElement('div')
-    generatedNumbers.forEach((generatedNumber,index) => {
-        const p = document.createElement('p')
-        p.innerHTML = generatedNumber
-        problemDiv.appendChild(p)
-        if(index != qty-1){
-            const plus = document.createElement('p')
-            plus.innerHTML = "+"
-            problemDiv.appendChild(plus)
-        }
+function solveAdditionProblem(problemNumbers){
+    let additionSolution = problemNumbers.reduce(function(prevVal, currVal) {
+        return prevVal + currVal
     })
-    let equalsLine = document.createElement('p')
-    equalsLine.innerHTML = "___________"
-    problemDiv.appendChild(equalsLine)
-    document.getElementById('problem').innerHTML = ''
-    document.getElementById('problem').appendChild(problemDiv)
+    return additionSolution
 }
 
-function displaySubtractionProblem(event){
-    let qty = event.target.dataset.quantity
-    let generatedNumbers = getRandomNumbers(numbers,qty)
-    generatedNumbers.sort(function(a, b) {
-        return b - a;
+function solveSubtractionProblem(problemNumbers){
+    problemNumbers.sort(function(a, b) {
+        return b - a
       })
-    let problemDiv = document.createElement('div')
-    generatedNumbers.forEach((generatedNumber,index) => {
-        const p = document.createElement('p')
-        p.innerHTML = generatedNumber
-        problemDiv.appendChild(p)
-        if(index != qty-1){
-            const minus = document.createElement('p')
-            minus.innerHTML = "-"
-            problemDiv.appendChild(minus)
-        }
+    let subtractionSolution = problemNumbers.reduce(function(prevVal, currVal) {
+        return prevVal - currVal
     })
-    let equalsLine = document.createElement('p')
-    equalsLine.innerHTML = "___________"
-    problemDiv.appendChild(equalsLine)
-    document.getElementById('problem').innerHTML = ''
-    document.getElementById('problem').appendChild(problemDiv)
+    return subtractionSolution
 }
 
 
-document.getElementById('two-numbers-add').addEventListener("click", displayAdditionProblem)
-document.getElementById('three-numbers-add').addEventListener("click", displayAdditionProblem)
-document.getElementById('two-numbers-sub').addEventListener("click", displaySubtractionProblem)
 
-function timer(){
-    let timeLimit = 30
+function timer(timeLimit){
+    let timerClock = document.getElementById('timer')
     let timeOut = setInterval(() => {
-    if(timeLimit == 0) {
-        $('#timer').html('Time Over')
-    } else {
-        if(timeLimit < 10) {
-        timeLimit = 0 + '' + timeLimit
+        if(timeLimit == 0) {
+            timerClock.innerHTML = "Time Over"
+        } else {
+            if(timeLimit < 10) {
+                timeLimit = 0 + '' + timeLimit
+            }
+            timerClock.innerHTML = "00:" + timeLimit
+            timeLimit -= 1
         }
-        $('#timer').html('00:' + timeLimit)
-        timeLimit -= 1
-    }
     }, 1000)
 }
 
+function generateProblem(type, qty){
+    let _numbers = getRandomNumbers(allNumbers, qty)
+    //create problem object
+    //set the given type as type property
+    //set numbers property from getRandomNumbers
+    //set correct answer property from solveProblem
+    //set enteredAnswer to ''
+    //set correct property to false (default) 
+    //set student property from login 
+    let problem = {
+        type: type,
+        numbers: _numbers,
+        correctAnswer: solveProblem(type, _numbers),
+        enteredAnswer: '',
+        correct: false,
+        student: "Ann"
+    }
+    return problem
+}
+
+function solveProblem(type, problemNumbers){
+    if(type == "+"){
+        return solveAdditionProblem(problemNumbers)
+    } 
+    if(type == "-"){
+        return solveSubtractionProblem(problemNumbers)
+    }
+}
+
+function submitAnswer(event){
+    
+}
+
+// EVENT LISTENERS
+// document.getElementById('two-numbers-add').addEventListener("click", displayAdditionProblem)
+// document.getElementById('three-numbers-add').addEventListener("click", displayAdditionProblem)
+// document.getElementById('two-numbers-sub').addEventListener("click", displaySubtractionProblem)
 
 
+console.log(generateProblem("-", 2))
