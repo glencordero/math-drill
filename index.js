@@ -7,9 +7,10 @@
 let allNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 
 
+
 // FUNCTIONS
-function getRandomNumbers(numbers, qty){
-    const shuffled = numbers.sort(() => 0.5 - Math.random())
+function getRandomNumbers(allNumbers, qty){
+    const shuffled = allNumbers.sort(() => 0.5 - Math.random())
     return shuffled.slice(0,qty)
 }
 
@@ -47,8 +48,7 @@ function timer(timeLimit){
     }, 1000)
 }
 
-function generateProblem(type, qty){
-    let _numbers = getRandomNumbers(allNumbers, qty)
+function generateProblem(event){
     //create problem object
     //set the given type as type property
     //set numbers property from getRandomNumbers
@@ -56,10 +56,11 @@ function generateProblem(type, qty){
     //set enteredAnswer to ''
     //set correct property to false (default) 
     //set student property from login 
+    let _numbers = getRandomNumbers(allNumbers, event.target.qty)
     let problem = {
-        type: type,
+        type: event.target.operator,
         numbers: _numbers,
-        correctAnswer: solveProblem(type, _numbers),
+        correctAnswer: solveProblem(event.target.operator, _numbers),
         enteredAnswer: '',
         correct: false,
         student: "Ann"
@@ -82,6 +83,7 @@ function submitAnswer(event){
 
 function displayProblem(problem){
     let problemDiv = document.getElementById('problem')
+    problemDiv.innerHTML = ''
     // create equationDiv
     let equationDiv = document.createElement('div')
     // loop over problemNumbers
@@ -108,9 +110,26 @@ function displayProblem(problem){
 
 
 // EVENT LISTENERS
-// document.getElementById('two-numbers-add').addEventListener("click", displayAdditionProblem)
-// document.getElementById('three-numbers-add').addEventListener("click", displayAdditionProblem)
-// document.getElementById('two-numbers-sub').addEventListener("click", displaySubtractionProblem)
+
+const twoNumbersAdd = document.getElementById('two-numbers-add')
+twoNumbersAdd.addEventListener('click', generateProblem)
+twoNumbersAdd.operator = '+'
+twoNumbersAdd.qty = 2 
+
+const threeNumbersAdd = document.getElementById('three-numbers-add')
+threeNumbersAdd.addEventListener('click', generateProblem)
+threeNumbersAdd.operator = '+'
+threeNumbersAdd.qty = 3 
+
+const twoNumbersSub = document.getElementById('two-numbers-sub')
+twoNumbersSub.addEventListener('click', generateProblem)
+twoNumbersSub.operator = '-'
+twoNumbersSub.qty = 2 
 
 
-generateProblem("+",3)
+
+// document.getElementById('two-numbers-add').addEventListener("click", generateProblem("+",2))
+// document.getElementById('three-numbers-add').addEventListener("click", generateProblem("+",3))
+// document.getElementById('two-numbers-sub').addEventListener("click", generateProblem("-",2))
+
+
