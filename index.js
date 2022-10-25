@@ -39,6 +39,7 @@ function timer(timeLimit){
     myInterval = setInterval(() => {
         if(timeLimit == 0) {
             timerClock.innerHTML = "Time Over"
+            document.getElementById('solution').readOnly=true
         } else {
             if(timeLimit < 10) {
                 timeLimit = 0 + '' + timeLimit
@@ -62,7 +63,8 @@ function generateProblem(event){
     //set enteredAnswer to ''
     //set correct property to false (default) 
     //set student property from login 
-    
+    document.getElementById('results').innerHTML = ''
+    document.getElementById('solution').value = ''
     let _numbers = getRandomNumbers(allNumbers, event.target.qty)
     let problem = {
         type: event.target.operator,
@@ -94,6 +96,7 @@ function submitAnswer(event){
 
 function _displayResult(problem){
     let resultsDiv = document.getElementById('results')
+    resultsDiv.innerHTML = ''
     if(problem.correct){
         resultsDiv.innerHTML = "Correct"
     }else{
@@ -114,7 +117,7 @@ function displayProblem(problem){
     }catch{
 
     }
-    timer(60)
+    timer(10)
     let problemDiv = document.getElementById('problem')
     problemDiv.innerHTML = ''
     // create equationDiv
