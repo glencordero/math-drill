@@ -7,7 +7,6 @@
 let allNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 
 
-
 // FUNCTIONS
 function getRandomNumbers(allNumbers, qty){
     const shuffled = allNumbers.sort(() => 0.5 - Math.random())
@@ -85,7 +84,14 @@ function solveProblem(type, problemNumbers){
 }
 
 function submitAnswer(event){
-    
+     
+}
+
+function validateAnswer(submittedAnswer, problem){
+    problem.enteredAnswer = submittedAnswer
+    if(submittedAnswer == problem.correctAnswer){
+        problem.correct = true
+    }
 }
 
 function displayProblem(problem){
