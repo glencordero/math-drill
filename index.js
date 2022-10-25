@@ -90,7 +90,6 @@ function submitAnswer(event){
     let problem = allProblems[allProblems.length-1]
     _validateAnswer(submittedAnswer, problem)
     _displayResult(problem)
-
 }
 
 function _displayResult(problem){
