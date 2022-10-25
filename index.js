@@ -5,6 +5,7 @@
 
 // SETUP
 let allNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+let allProblems = []
 
 
 // FUNCTIONS
@@ -71,6 +72,7 @@ function generateProblem(event){
         correct: false,
         student: "Ann"
     }
+    allProblems.push(problem)
     displayProblem(problem)
 }
 
@@ -84,10 +86,23 @@ function solveProblem(type, problemNumbers){
 }
 
 function submitAnswer(event){
-     
+    let submittedAnswer = document.getElementById('solution').value
+    let problem = allProblems[allProblems.length-1]
+    _validateAnswer(submittedAnswer, problem)
+    _displayResult(problem)
+
 }
 
-function validateAnswer(submittedAnswer, problem){
+function _displayResult(problem){
+    let resultsDiv = document.getElementById('results')
+    if(problem.correct){
+        resultsDiv.innerHTML = "Correct"
+    }else{
+        resultsDiv.innerHTML = "Please Try Again"
+    }
+}
+
+function _validateAnswer(submittedAnswer, problem){
     problem.enteredAnswer = submittedAnswer
     if(submittedAnswer == problem.correctAnswer){
         problem.correct = true
@@ -145,3 +160,5 @@ twoNumbersSub.addEventListener('click', generateProblem)
 twoNumbersSub.operator = '-'
 twoNumbersSub.qty = 2 
 
+const submitButton = document.getElementById('submit')
+submitButton.addEventListener('click', submitAnswer)
