@@ -31,11 +31,12 @@ function solveSubtractionProblem(problemNumbers){
     return subtractionSolution
 }
 
-
+let myInterval
 
 function timer(timeLimit){
     let timerClock = document.getElementById('timer')
-    let timeOut = setInterval(() => {
+    timerClock.innerHTML = ''
+    myInterval = setInterval(() => {
         if(timeLimit == 0) {
             timerClock.innerHTML = "Time Over"
         } else {
@@ -48,6 +49,11 @@ function timer(timeLimit){
     }, 1000)
 }
 
+function stopTimer(){
+    clearInterval(myInterval)
+}
+
+
 function generateProblem(event){
     //create problem object
     //set the given type as type property
@@ -56,6 +62,7 @@ function generateProblem(event){
     //set enteredAnswer to ''
     //set correct property to false (default) 
     //set student property from login 
+    
     let _numbers = getRandomNumbers(allNumbers, event.target.qty)
     let problem = {
         type: event.target.operator,
@@ -82,6 +89,12 @@ function submitAnswer(event){
 }
 
 function displayProblem(problem){
+    try{
+        clearInterval(myInterval)
+    }catch{
+
+    }
+    timer(60)
     let problemDiv = document.getElementById('problem')
     problemDiv.innerHTML = ''
     // create equationDiv
@@ -125,11 +138,4 @@ const twoNumbersSub = document.getElementById('two-numbers-sub')
 twoNumbersSub.addEventListener('click', generateProblem)
 twoNumbersSub.operator = '-'
 twoNumbersSub.qty = 2 
-
-
-
-// document.getElementById('two-numbers-add').addEventListener("click", generateProblem("+",2))
-// document.getElementById('three-numbers-add').addEventListener("click", generateProblem("+",3))
-// document.getElementById('two-numbers-sub').addEventListener("click", generateProblem("-",2))
-
 
