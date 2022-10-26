@@ -2,10 +2,12 @@
 // addition of 3 numbers 1-20
 // slow timer and a fast timer
 // keeps track of problems missed
+// make checkbox that will show problems w/incorrect answers
 
 // SETUP
 let allNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 let allProblems = []
+let incorrectProblems = []
 
 
 // FUNCTIONS
@@ -65,6 +67,7 @@ function generateProblem(event){
     //set student property from login 
     document.getElementById('results').innerHTML = ''
     document.getElementById('solution').value = ''
+    
     let _numbers = getRandomNumbers(allNumbers, event.target.qty)
     let problem = {
         type: event.target.operator,
@@ -76,6 +79,13 @@ function generateProblem(event){
     }
     allProblems.push(problem)
     displayProblem(problem)
+}
+
+function generateIncorrectProblem(incorrectProblems){
+    document.getElementById('results').innerHTML = ''
+    document.getElementById('solution').innerHTML = ''
+    let incorrectProblem = incorrectProblems[0]
+    
 }
 
 function solveProblem(type, problemNumbers){
@@ -108,6 +118,9 @@ function _validateAnswer(submittedAnswer, problem){
     problem.enteredAnswer = submittedAnswer
     if(submittedAnswer == problem.correctAnswer){
         problem.correct = true
+    }
+    if(!problem.correct){
+        incorrectProblems.push(problem)
     }
 }
 
@@ -145,6 +158,8 @@ function displayProblem(problem){
 // append equationDiv to problemDiv
 
 
+
+
 // EVENT LISTENERS
 
 const twoNumbersAdd = document.getElementById('two-numbers-add')
@@ -164,3 +179,5 @@ twoNumbersSub.qty = 2
 
 const submitButton = document.getElementById('submit')
 submitButton.addEventListener('click', submitAnswer)
+
+document.getElementById('display-incorrect-problems').addEventListener('click', generateIncorrectProblem )
