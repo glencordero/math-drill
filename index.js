@@ -81,11 +81,17 @@ function generateProblem(event){
     displayProblem(problem)
 }
 
-function generateIncorrectProblem(incorrectProblems){
+function generateIncorrectProblem(event){
+    let incorrectProblems = event.target.incorrectProblems
+    if(!incorrectProblems.length){
+        document.getElementById('results').innerHTML = 'No Incorrect Problems Found'
+        return
+    }
     document.getElementById('results').innerHTML = ''
-    document.getElementById('solution').innerHTML = ''
-    let incorrectProblem = incorrectProblems[0]
-    
+    document.getElementById('solution').value = ''
+    let incorrectProblem = incorrectProblems.pop()
+    incorrectProblem.enteredAnswer = ''
+    displayProblem(incorrectProblem)
 }
 
 function solveProblem(type, problemNumbers){
@@ -130,7 +136,7 @@ function displayProblem(problem){
     }catch{
 
     }
-    timer(10)
+    timer(30)
     let problemDiv = document.getElementById('problem')
     problemDiv.innerHTML = ''
     // create equationDiv
@@ -180,4 +186,8 @@ twoNumbersSub.qty = 2
 const submitButton = document.getElementById('submit')
 submitButton.addEventListener('click', submitAnswer)
 
-document.getElementById('display-incorrect-problems').addEventListener('click', generateIncorrectProblem )
+
+
+const displayIncorrectProblemsButton = document.querySelector('button');
+displayIncorrectProblemsButton.addEventListener('click', generateIncorrectProblem)
+displayIncorrectProblemsButton.incorrectProblems = incorrectProblems
